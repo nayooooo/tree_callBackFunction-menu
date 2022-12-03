@@ -52,6 +52,38 @@ menu_t* find_Menu(const menu_P_t menu_Start, const menu_t* const menu_Target)
 }
 
 /**
+ * @fn menu_t* find_parMenu(const menu_P_t menu_Start, const menu_t* const subMenu)
+ * @brief find the position of a menu's parMenu in the current menu system
+ * @details
+ *	1. we just know the target menu's three param
+ *	2. the all "level" menus is belong to "level - 1" menus
+ *
+ * @param [menu_Start] subtree's pointer
+ * @param [subMenu] target menu, only use it's three param
+ * @return menu_t* target menu's address
+ */
+menu_t* find_parMenu(const menu_P_t menu_Start, const menu_t* const subMenu)
+{
+	menu_t* p = menu_Start;
+	menu_t* q = NULL;
+
+	if (p == NULL) return NULL;
+	if (p->level > subMenu->level - 1) return NULL;
+
+	if ((subMenu->level > 0)
+		&& (p->level == subMenu->level - 1)
+		&& (p->selfVal == subMenu->parVal))
+	{
+		return p;
+	}
+
+	if (p->nextLevel != NULL) q = find_parMenu(p->nextLevel, subMenu);
+	if (q != NULL) return q;
+	if (p->next != NULL) q = find_parMenu(p->next, subMenu);
+	return q;
+}
+
+/**
  * @fn menu_t* insert_Menu(const menu_P_t menu_Start, const menu_t* const menu_Insert)
  * @brief insert a menu into menu system
  *

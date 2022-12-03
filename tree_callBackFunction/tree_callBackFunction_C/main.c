@@ -27,6 +27,7 @@ int main()
     menu_t* q = NULL;
     menu_t menu_Temp = {
         .level = 2,
+        .parVal = 1,
         .selfVal = 1
     };
 
@@ -37,10 +38,10 @@ int main()
     printf("==========================================\r\n");
     traversal_Menu(&menu_Start);
     printf("==========================================\r\n");
-    q = find_Menu(&menu_Start, &menu_Temp);
+    q = find_parMenu(&menu_Start, &menu_Temp);
     if (q != NULL) {
         printf("%d %d %d name: %s\r\n", q->level, q->parVal, q->selfVal, q->name);
-        q->eventCB(q);
+        if(q->eventCB != NULL) q->eventCB(q);
     }
     else printf("not find!\a\r\n");
     delete_Menu(&menu_Start, &menu_Temp);

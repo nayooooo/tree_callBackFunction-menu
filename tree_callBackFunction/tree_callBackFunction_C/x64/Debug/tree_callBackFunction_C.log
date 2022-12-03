@@ -1,7 +1,2 @@
 ﻿  main.c
-  menu.c
-  menu_event.c
-D:\embedded\embedded software\menu\tree_callBackFunction\tree_callBackFunction\tree_callBackFunction_C\menu_event.c(5,2): warning C4013: “printf”未定义；假设外部返回 int
-  menu_link.c
-  正在生成代码...
   tree_callBackFunction_C.vcxproj -> D:\embedded\embedded software\menu\tree_callBackFunction\tree_callBackFunction\x64\Debug\tree_callBackFunction_C.exe
