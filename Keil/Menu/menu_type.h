@@ -50,7 +50,7 @@ typedef struct menu_t{
 	struct menu_t* nextLevel;
 	// event processing
 	menuEventState (*eventCB)(struct menu_t*) reentrant;		// event task
-}menu_t, *menu_P_t;
+}menu_t, *menu_t_ptr;
 
 
 #endif /* __MENU_TYPE_H */

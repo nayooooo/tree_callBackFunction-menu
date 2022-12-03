@@ -17,13 +17,13 @@
 #include <stdio.h>
 
 /**
- * @fn void traversal_Menu(const menu_P_t menu_Start) reentrant
+ * @fn void traversal_Menu(const menu_t_ptr menu_Start) reentrant
  * @brief traversal the menu system
  *
  * @param [menu_Start] subtree's pointer
  * @return None
  */
-void traversal_Menu(const menu_P_t menu_Start) reentrant
+void traversal_Menu(const menu_t_ptr menu_Start) reentrant
 {
 	menu_t* p = menu_Start;
 	
@@ -35,7 +35,7 @@ void traversal_Menu(const menu_P_t menu_Start) reentrant
 }
 
 /**
- * @fn menu_t* find_Menu(const menu_P_t menu_Start, const menu_t* const menu_Target) reentrant
+ * @fn menu_t* find_Menu(const menu_t_ptr menu_Start, const menu_t* const menu_Target) reentrant
  * @brief find the position of a menu in the current menu system
  * @details 
  *	1. we just know the target menu's three param
@@ -45,7 +45,7 @@ void traversal_Menu(const menu_P_t menu_Start) reentrant
  * @param [menu_Target] target menu, only use it's three param
  * @return menu_t* target menu's address
  */
-menu_t* find_Menu(const menu_P_t menu_Start, const menu_t* const menu_Target) reentrant
+menu_t* find_Menu(const menu_t_ptr menu_Start, const menu_t* const menu_Target) reentrant
 {
 	menu_t* p = menu_Start;
     menu_t* q = NULL;
@@ -64,7 +64,7 @@ menu_t* find_Menu(const menu_P_t menu_Start, const menu_t* const menu_Target) re
 }
 
 /**
- * @fn menu_t* find_parMenu(const menu_P_t menu_Start, const menu_t* const subMenu) reentrant
+ * @fn menu_t* find_parMenu(const menu_t_ptr menu_Start, const menu_t* const subMenu) reentrant
  * @brief find the position of a menu's parMenu in the current menu system
  * @details
  *	1. we just know the target menu's three param
@@ -74,7 +74,7 @@ menu_t* find_Menu(const menu_P_t menu_Start, const menu_t* const menu_Target) re
  * @param [subMenu] target menu, only use it's three param
  * @return menu_t* target menu's address
  */
-menu_t* find_parMenu(const menu_P_t menu_Start, const menu_t* const subMenu) reentrant
+menu_t* find_parMenu(const menu_t_ptr menu_Start, const menu_t* const subMenu) reentrant
 {
 	menu_t* p = menu_Start;
 	menu_t* q = NULL;
@@ -96,14 +96,14 @@ menu_t* find_parMenu(const menu_P_t menu_Start, const menu_t* const subMenu) ree
 }
 
 /**
- * @fn menu_t* insert_Menu(const menu_P_t menu_Start, menu_t* const menu_Insert)
+ * @fn menu_t* insert_Menu(const menu_t_ptr menu_Start, menu_t* const menu_Insert)
  * @brief insert a menu into menu system
  *
  * @param [menu_Start] subtree's pointer
  * @param [menu_Insert] menu witch will be insert
- * @return [menu_t*] menu system's pointer
+ * @return [menu_t_ptr] menu system's pointer
  */
-menu_t* insert_Menu(const menu_P_t menu_Start, menu_t* const menu_Insert)
+menu_t_ptr insert_Menu(const menu_t_ptr menu_Start, menu_t* const menu_Insert)
 {
 	menu_t p;
     menu_t* q = NULL;
@@ -140,14 +140,14 @@ menu_t* insert_Menu(const menu_P_t menu_Start, menu_t* const menu_Insert)
 }
 
 /**
- * @fn menu_t* delete_Menu(const menu_P_t menu_Start, menu_t* const menu_Delete)
+ * @fn menu_t* delete_Menu(const menu_t_ptr menu_Start, menu_t* const menu_Delete)
  * @brief delete a menu into menu system
  *
  * @param [menu_Start] subtree's pointer
  * @param [menu_Delete] menu witch will be deleted
- * @return [menu_t*] menu system's pointer
+ * @return [menu_t_ptr] menu system's pointer
  */
-menu_t* delete_Menu(const menu_P_t menu_Start, menu_t* const menu_Delete)
+menu_t_ptr delete_Menu(const menu_t_ptr menu_Start, menu_t* const menu_Delete)
 {
 	menu_t* q = NULL;
 
