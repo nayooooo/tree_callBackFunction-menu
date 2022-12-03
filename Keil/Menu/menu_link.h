@@ -14,6 +14,7 @@
 
 void traversal_Menu(const menu_P_t menu_Start) reentrant;
 menu_t* find_Menu(const menu_P_t menu_Start, const menu_t* const menu_Target) reentrant;
+menu_t* find_parMenu(const menu_P_t menu_Start, const menu_t* const subMenu) reentrant;
 menu_t* insert_Menu(const menu_P_t menu_Start, menu_t* const menu_Insert);
 menu_t* delete_Menu(const menu_P_t menu_Start, menu_t* const menu_Delete);
 

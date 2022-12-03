@@ -35,7 +35,8 @@ void main()
 	menu_t* mark = &menu_OneLevel[0];
 	menu_t menu_Temp;
 	menu_Temp.level = 2;
-	menu_Temp.selfVal = 2;
+	menu_Temp.parVal = 1;
+	menu_Temp.selfVal = 1;
 	
 	System_Init();
 	
@@ -44,10 +45,10 @@ void main()
     insert_Menu(&menu_Start, &menu_TwoLevel[0]);
     insert_Menu(&menu_Start, &menu_TwoLevel[1]);
 	
-	q = find_Menu(&menu_Start, &menu_Temp);
+	q = find_parMenu(&menu_Start, &menu_Temp);
 	if(q != NULL) {
 		OLED_Show_Menu_Infor(q); OLED_Refresh_Gram();
-		q->eventCB(q);
+		if(q->eventCB != NULL) q->eventCB(q);
 	} else {
 		OLED_Fill(0, 56, 128 - 1, 56 + 8, CLEAR);
 		OLED_ShowString(0, 58, (u8*)"not find!", 8, FILL);

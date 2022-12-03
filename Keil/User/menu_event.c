@@ -2,7 +2,7 @@
 
 #include "screen.h"
 
-menuEventState OLED_Show_Hello_World(void)
+menuEventState OLED_Show_Hello_World(void) reentrant
 {
 	OLED_Show_Hello_Type1();
 	OLED_Refresh_Gram();
@@ -10,7 +10,7 @@ menuEventState OLED_Show_Hello_World(void)
 	return MENU_EVENT_OK;
 }
 
-menuEventState OLED_Show_Hello_C51(void)
+menuEventState OLED_Show_Hello_C51(void) reentrant
 {
 	OLED_Show_Hello_Type2();
 	OLED_Refresh_Gram();
