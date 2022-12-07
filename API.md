@@ -26,7 +26,9 @@ menu_t_ptr | 单个菜单的指针（一般用于指向菜单系统的指针）
 
 名称 | 参数 | 返回值类型 | 功能
 :-: | :-: | :-: | :-:
-traversal_Menu | menu_t_ptr | void | 遍历菜单系统
+traversal_MenuSystem | menu_t_ptr | void | 遍历菜单系统
+traversal_subMenus | menu_t* | void | 搜索父级菜单下一级的子级菜单
+show_subMenus_nextLevel | menu_t* | menu_t* | 向交互界面显示父级菜单下的子级菜单
 find_Menu | menu_t_ptr & menu_t* | menu_t* | 查找指定的菜单
 find_parMenu | menu_t_ptr & menu_t* | menu_t* | 查找所指定的菜单的父级菜单
 insert_Menu | menu_t_ptr & menu_t* | menu_t_ptr | 向指定的菜单系统中插入一个菜单（插入菜单之前应存在父级菜单）
