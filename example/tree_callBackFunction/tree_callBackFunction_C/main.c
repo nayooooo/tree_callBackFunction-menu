@@ -24,6 +24,9 @@ menu_t menu_TwoLevel[] = {  // ¶þ¼¶²Ëµ¥
 
 int main()
 {
+    menu_t* tempMenu = NULL;
+    menu_t* targetMenu = &menu_Start;
+
     insert_Menu(&menu_Start, &menu_OneLevel[0]);
     insert_Menu(&menu_Start, &menu_OneLevel[1]);
     insert_Menu(&menu_Start, &menu_TwoLevel[0]);
@@ -31,7 +34,11 @@ int main()
     printf("==========================================\r\n");
     traversal_MenuSystem(&menu_Start);
     printf("==========================================\r\n");
-    show_subMenus_nextLevel(&menu_Start);
+    tempMenu = find_nextMenu(&menu_Start, targetMenu);
+    if (tempMenu != NULL)
+        printf("%d %d %d: %s\r\n", tempMenu->level, tempMenu->parVal, tempMenu->selfVal, tempMenu->name);
+    else
+        printf("not find it!\r\n");
 
     return 0;
 }
