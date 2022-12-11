@@ -143,6 +143,83 @@ menu_t* find_parMenu(const menu_t_ptr menu_Start, const menu_t* const subMenu) r
 }
 
 /**
+ * @fn menu_t* find_prevMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant
+ * @brief find the position of a menu's prevMenu
+ *
+ * @param [menu_Start] subtree's pointer
+ * @param [menu] target menu's nextMenu
+ * @return menu_t* target menu's address, if it haven't prevMenu, return NULL
+ */
+menu_t* find_prevMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant
+{
+	menu_t* p = menu_Start;
+	menu_t* q = NULL;
+
+	if (p == NULL) return NULL;
+	if (p->level > menu->level - 1) return NULL;
+
+	if ((menu->level > 0)
+		&& (p->level == menu->level - 1)
+		&& (p->selfVal == menu->parVal))
+	{
+		if (p->nextLevel != NULL) p = p->nextLevel;
+		else return NULL;
+		while (p->next != NULL) {
+			if (p->next->selfVal == menu->selfVal) {
+				q = p;
+				break;
+			}
+			p = p->next;
+		}
+		return q;
+	}
+
+	if (p->nextLevel != NULL) q = find_prevMenu(p->nextLevel, menu);
+	if (q != NULL) return q;
+	if (p->next != NULL) q = find_prevMenu(p->next, menu);
+	return q;
+}
+
+/**
+ * @fn menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant
+ * @brief find the position of a menu's nextMenu
+ *
+ * @param [menu_Start] subtree's pointer
+ * @param [menu] target menu's nextMenu
+ * @return menu_t* target menu's address, if it haven't nextMenu, return NULL
+ */
+menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant
+{
+	menu_t* p = menu_Start;
+	menu_t* q = NULL;
+
+	if (p == NULL) return NULL;
+	if (p->level > menu->level - 1) return NULL;
+
+	if ((menu->level > 0)
+		&& (p->level == menu->level - 1)
+		&& (p->selfVal == menu->parVal))
+	{
+		if (p->nextLevel != NULL) p = p->nextLevel;
+		else return NULL;
+		while (p->next != NULL) {
+			if (p->selfVal == menu->selfVal) {
+				if(p->next != NULL)
+					q = p->next;
+				break;
+			}
+			p = p->next;
+		}
+		return q;
+	}
+
+	if (p->nextLevel != NULL) q = find_nextMenu(p->nextLevel, menu);
+	if (q != NULL) return q;
+	if (p->next != NULL) q = find_nextMenu(p->next, menu);
+	return q;
+}
+
+/**
  * @fn menu_t_ptr insert_Menu(const menu_t_ptr menu_Start, menu_t* const menu_Insert)
  * @brief insert a menu into menu system
  *
