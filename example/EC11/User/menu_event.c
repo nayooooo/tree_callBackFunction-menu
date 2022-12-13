@@ -9,10 +9,9 @@ menuEventState screen_Show_Freq(void) reentrant
 	return MENU_EVENT_OK;
 }
 
-menuEventState screen_Set_Freq(uint8_t newFreq) reentrant
+menuEventState screen_Set_Freq(void) reentrant
 {
-	OLED_Clear();
-	OLED_Set_Freq(newFreq);
+	OLED_Show_Hello();
 	return MENU_EVENT_OK;
 }
 

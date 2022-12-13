@@ -18,7 +18,7 @@ Screen_ResRatio_t Screen_ResRatio;  // 不对外声明，以指针的形式进行访问
 
 void OLED_Show_Hello(void)
 {
-	OLED_ShowString(0, 0, (uint8_t*)"Hello World!", 8, FILL);
+	OLED_ShowString(0, 0, (uint8_t*)"Hello C51!", 8, FILL);
 }
 
 void OLED_Show_Freq(void)

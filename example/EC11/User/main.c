@@ -28,11 +28,11 @@ menu_t menu_OneLevel[] = {  // 一级菜单
 	{ "screen", 1, 0, 1, NULL, NULL, NULL, NULL }
 };
 menu_t menu_TwoLevel[] = {  // 二级菜单
-	{ "screen freq", 2, 1, 1, NULL, NULL, NULL, NULL }
+	{ "freq", 2, 1, 1, NULL, NULL, NULL, NULL }
 };
 menu_t menu_ThreeLevel[] = {  // 三级菜单
-	{ "screen show freq", 3, 1, 1, NULL, NULL, NULL, screen_Show_Freq },
-	{ "screen set freq", 3, 1, 2, NULL, NULL, NULL, screen_Set_Freq }
+	{ "show freq", 3, 1, 1, NULL, NULL, NULL, screen_Show_Freq },
+	{ "set freq", 3, 1, 2, NULL, NULL, NULL, screen_Set_Freq }
 };
 
 /*=========================================================
@@ -55,7 +55,7 @@ void System_Init(void)
     insert_Menu(&menu_Start, &menu_ThreeLevel[0]);
     insert_Menu(&menu_Start, &menu_ThreeLevel[1]);
 	currentMenu = &menu_Start;
-	pointerMenu = &menu_OneLevel[0];
+	pointerMenu = &menu_Start;
 	
 	EA_OPN();
 }
@@ -82,18 +82,24 @@ void main()
 		}
 		if(EC11_Rotate_Times[0]) {
 			pointerMenu_JumpForward(&menu_Start);
+			screen_Show_PointerMenu();
 			EC11_Rotate_Times[0]--;
 		}
 		if(EC11_Rotate_Times[1]) {
 			pointerMenu_JumpBack(&menu_Start);
+			screen_Show_PointerMenu();
 			EC11_Rotate_Times[1]--;
 		}
 		if(Key_Scan(KEY_SCAN_SINGLE) == KEY0_PRES) {
-			if(pointerMenu->nextLevel != NULL) {
-				currentMenu = pointerMenu;
-				pointerMenu = pointerMenu->nextLevel;
+			if(currentMenu->nextLevel != NULL) {
+				enter_pointerMenu();
+				if(pointerMenu->eventCB != NULL) {
+					carryOut_event();
+				}else screen_Show_subMenus(currentMenu);
+			} else {
+				back_SafeMenu(&menu_Start);
+				screen_Show_subMenus(currentMenu);
 			}
-			screen_Show_subMenus(currentMenu);
 		}
 	}
 }

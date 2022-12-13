@@ -432,6 +432,20 @@ void OLED_ShowString(u8 x,u8 y,const u8 *p,u8 size,u8 mode)
     }
 }
 
+//OLED显示指定长度的字符串
+void OLED_ShowString_len(u8 x,u8 y,const u8 *p,u8 len,u8 size,u8 mode)
+{	
+    while((len--)&&(*p<='~')&&(*p>=' '))
+    {       
+        if(x>(OLED_COL_MAX-(size/2))){x=0;y+=size;}
+        if(y>(OLED_ROW_MAX-size)){y=x=0;OLED_Clear();}
+        OLED_ShowChar(x,y,*p,size,mode);	 
+        if(size==8) x+=size;
+		else x+=size/2;
+        p++;
+    }
+}
+
 /* ---------------- message ---------------- */
 
 /* ---------------- inition ---------------- */

@@ -145,6 +145,7 @@ menu_t* find_parMenu(const menu_t_ptr menu_Start, const menu_t* const subMenu) r
 /**
  * @fn menu_t* find_prevMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant
  * @brief find the position of a menu's prevMenu
+ * @details if the [menu] is the tree's first subMenu, return [NULL]
  *
  * @param [menu_Start] subtree's pointer
  * @param [menu] target menu's nextMenu
@@ -183,6 +184,7 @@ menu_t* find_prevMenu(const menu_t_ptr menu_Start, const menu_t* const menu) ree
 /**
  * @fn menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant
  * @brief find the position of a menu's nextMenu
+ * @details if the [menu] is the tree's last subMenu, return [NULL]
  *
  * @param [menu_Start] subtree's pointer
  * @param [menu] target menu's nextMenu

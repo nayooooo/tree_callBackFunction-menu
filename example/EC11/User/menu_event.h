@@ -9,7 +9,7 @@
 =========================================================*/
 
 menuEventState screen_Show_Freq(void) reentrant;
-menuEventState screen_Set_Freq(uint8_t newFreq) reentrant;
+menuEventState screen_Set_Freq(void) reentrant;
 
 #endif /* __MENU_EVENT_H */
 
