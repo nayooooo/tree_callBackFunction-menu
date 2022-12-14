@@ -187,7 +187,7 @@ menu_t* find_prevMenu(const menu_t_ptr menu_Start, const menu_t* const menu) ree
  * @details if the [menu] is the tree's last subMenu, return [NULL]
  *
  * @param [menu_Start] subtree's pointer
- * @param [menu] target menu's nextMenu
+ * @param [menu] target menu's prevMenu
  * @return menu_t* target menu's address, if it haven't nextMenu, return NULL
  */
 menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant
@@ -219,6 +219,52 @@ menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu) ree
 	if (q != NULL) return q;
 	if (p->next != NULL) q = find_nextMenu(p->next, menu);
 	return q;
+}
+
+/**
+ * @fn uint8_t count_CurrentMenu_NextLevelMenu_Num(const menu_t_ptr menu_Start)
+ * @brief count the [menu_Start]'s nextLevel menus'num
+ *
+ * @param [menu_Start] subtree's pointer
+ * @return [uint8_t] the [menu_Start]'s nextLevel menus'num
+ */
+uint8_t count_CurrentMenu_NextLevelMenu_Num(const menu_t_ptr menu_Start)
+{
+	uint8_t menu_Num = 0;
+	menu_t* p = menu_Start;
+	
+	if(p->nextLevel != NULL)
+	{
+		menu_Num++;
+		p = p->nextLevel;
+		while(p->next != NULL) {
+			menu_Num++;
+			p = p->next;
+		}
+	}
+	
+	return menu_Num;
+}
+
+/**
+ * @fn uint8_t count_SameLevel_PrevMenu_Num(const menu_t* const menu)
+ * @brief count the [menu]'s sameLevel prevMenus'num
+ *
+ * @param [menu] target menu
+ * @return [uint8_t] the [menu]'s sameLevel prevMenus'num
+ */
+uint8_t count_SameLevel_PrevMenu_Num(const menu_t* const menu)
+{
+	uint8_t prevMenu_Num = 0;
+	menu_t* p = menu;
+	
+	while((p->prev != NULL) && (p->prev->level == p->level))
+	{
+		prevMenu_Num++;
+		p = p->prev;
+	}
+	
+	return prevMenu_Num;
 }
 
 /**

@@ -43,6 +43,8 @@ find_Menu | menu_t_ptr & menu_t* | menu_t* | 查找指定的菜单 | -
 find_parMenu | menu_t_ptr & menu_t* | menu_t* | 查找所指定的菜单的父级菜单 | -
 find_prevMenu | menu_t_ptr & menu_t* | menu_t* | 查找同一父级菜单下的同一等级菜单中，所给menu_t*的前一个菜单 | -
 find_nextMenu | menu_t_ptr & menu_t* | menu_t* | 查找同一父级菜单下的同一等级菜单中，所给menu_t*的后一个菜单 | -
+count_CurrentMenu_NextLevelMenu_Num | menu_t_ptr | uint8_t | 计算同一级菜单相同父级菜单的子级菜单数 | -
+count_SameLevel_PrevMenu_Num | menu_t* | uint8_t | 计算同一级菜单相同父级菜单下，[menu_t*]前方的菜单数 | -
 insert_Menu | menu_t_ptr & menu_t* | menu_t_ptr | 向指定的菜单系统中插入一个菜单（插入菜单之前应存在父级菜单） | -
 delete_Menu | menu_t_ptr & menu_t* | menu_t_ptr | 从指定的菜单系统中删除一个菜单 | -
 
