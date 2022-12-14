@@ -30,6 +30,11 @@
 
 #define PI 3.1415926
 
+typedef enum{
+	MAIN_CB_OK = 0,
+	MAIN_CB_ERR
+}Main_CB_State;
+
 #include	"STC8xxxx.H"
 
 

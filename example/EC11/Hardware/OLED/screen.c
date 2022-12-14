@@ -1,8 +1,8 @@
 /**
  * @file screen.c
  * @brief 屏幕显示文件，基于SSD1306
- * @encoding GB2312
  * @author yewan
+ * @encoding GB2312
  */
 
 #include "screen.h"
@@ -31,7 +31,23 @@ void OLED_Show_Freq(void)
 
 void OLED_Set_Freq(uint8_t newFreq)
 {
-	if(OLED_Screen_Freq <= 60) OLED_Screen_Freq = newFreq;
+	if((newFreq >= SCREEN_FREQ_MIN)
+		&& (newFreq <= SCREEN_FREQ_MAX))
+	{ OLED_Screen_Freq = newFreq; }
+}
+
+void OLED_Add_Freq(void)
+{
+	OLED_Clear();
+	OLED_Set_Freq(OLED_Screen_Freq + 1);
+	OLED_Show_Freq();
+}
+
+void OLED_Sub_Freq(void)
+{
+	OLED_Clear();
+	OLED_Set_Freq(OLED_Screen_Freq - 1);
+	OLED_Show_Freq(); 
 }
 
 /**

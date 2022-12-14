@@ -1,3 +1,9 @@
+/**
+ * @file main.h
+ * @author yewan
+ * @encoding GB2312
+ */
+
 #ifndef __MAIN_H
 #define __MAIN_H
 

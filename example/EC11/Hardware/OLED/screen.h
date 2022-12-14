@@ -1,8 +1,8 @@
 /**
  * @file screen.h
  * @brief 屏幕显示文件，基于SSD1306
- * @encoding GB2312
  * @author yewan
+ * @encoding GB2312
  */
 
 #ifndef __SCREEN_H
@@ -20,6 +20,9 @@
 #define SCREEN_PIXEL_HIGHT_DEFAULT				(2)
 #define SCREEN_PIXELS_TOTAL_COL_DEFAULT			(SCREEN_COL_MAX / SCREEN_PIXEL_WIDTH_DEFAULT)
 #define SCREEN_PIXELS_TOTAL_ROW_DEFAULT			(SCREEN_ROW_MAX / SCREEN_PIXEL_HIGHT_DEFAULT)
+
+#define SCREEN_FREQ_MAX			(60)
+#define SCREEN_FREQ_MIN			(10)
 
 /* 控制变量枚举 ------------------------------------------*/
 
@@ -70,6 +73,8 @@ typedef struct{
 void OLED_Show_Hello(void);
 void OLED_Show_Freq(void);
 void OLED_Set_Freq(uint8_t newFreq);
+void OLED_Add_Freq(void);
+void OLED_Sub_Freq(void);
 void OLED_Refresh_Time(uint32_t sec);
 
 void Screen_DrawPixel(Screen_Pixel_Coor pixel, uint8_t mode);

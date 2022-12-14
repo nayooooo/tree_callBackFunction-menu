@@ -104,7 +104,7 @@ void OLED_Clear(void)
 {  
 	u8 i,n;  
 	for(i=0;i<OLED_PAGE_MAX;i++)for(n=0;n<OLED_COL_MAX;n++)OLED_GRAM[n][i]=0X00;  
-	OLED_Refresh_Gram();
+//	OLED_Refresh_Gram();
 }
 
 //OLED»­µã		   

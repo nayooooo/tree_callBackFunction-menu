@@ -25,10 +25,11 @@ menu_t* pointerMenu = NULL;
 menu_t* screen_Show_subMenus(menu_t* parMenu)
 {
 	uint8_t i = 0;
+	uint8_t menu_Num = 0;
 	menu_t* p = parMenu;
 	
 	OLED_Clear();
-	if (p->nextLevel != NULL) {
+	if (p->nextLevel != NULL) {  // 当前菜单有子级菜单
 		p = p->nextLevel;
 		// 显示一页菜单
 		do {
@@ -65,10 +66,7 @@ menu_t* screen_Show_PointerMenu(void)
 	if(p->level == c->level + 1)
 	{
 		// 检查选中的菜单在当前菜单栏中的序号，0号为第一个菜单
-		while((p->prev != NULL) && (p->prev->level == p->level)) {
-			i++;
-			p = p->prev;
-		}
+		i = count_SameLevel_PrevMenu_Num(p);
 		OLED_Fill(0, 0, POINTERMENU_SPACE * MENU_INFOR_HIGHT, get_Screen_ResRatio_totalRow(), CLEAR);
 		OLED_ShowString(MENU_INFOR_COL, MENU_INFOR_ROW + (i % num) * MENU_INFOR_HIGHT,
 						(u8*)">", MENU_INFOR_SIZE, FILL);

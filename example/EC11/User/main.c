@@ -1,3 +1,9 @@
+/**
+ * @file main.c
+ * @author yewan
+ * @encoding GB2312
+ */
+
 #include "main.h"
 
 #include "bmp.h"
@@ -36,6 +42,21 @@ menu_t menu_ThreeLevel[] = {  // 三级菜单
 };
 
 /*=========================================================
+	EC11 回调函数指针
+=========================================================*/
+
+Main_CB_State (*EC11_CW_Event)(void);
+Main_CB_State (*EC11_CCW_Event)(void);
+
+/*=========================================================
+	回调函数声明
+=========================================================*/
+
+/* EC11 功能回调 */
+Main_CB_State EC11_CW_MenuSwitch_CB(void);
+Main_CB_State EC11_CCW_MenuSwitch_CB(void);
+
+/*=========================================================
 	主函数
 =========================================================*/
 
@@ -64,6 +85,9 @@ void main()
 {
 	Screen_ResRatio_t* Screen_Infor = NULL;
 	
+	EC11_CW_Event = EC11_CW_MenuSwitch_CB;
+	EC11_CCW_Event = EC11_CCW_MenuSwitch_CB;
+	
 	System_Init();
 	
 	Screen_Infor = Screen_ResRatio_Init(
@@ -76,32 +100,71 @@ void main()
 	
 	while(1)
 	{
+		// 刷新屏幕
 		if(OLED_Event_Flag & OLED_Update_Event) {
 			OLED_Event_Flag &= ~OLED_Update_Event;
 			OLED_Refresh_Gram();
 		}
+		
+		// EC11 事件
 		if(EC11_Rotate_Times[0]) {
-			pointerMenu_JumpForward(&menu_Start);
-			screen_Show_PointerMenu();
+			EC11_CW_Event();
 			EC11_Rotate_Times[0]--;
 		}
 		if(EC11_Rotate_Times[1]) {
-			pointerMenu_JumpBack(&menu_Start);
-			screen_Show_PointerMenu();
+			EC11_CCW_Event();
 			EC11_Rotate_Times[1]--;
 		}
+		
+		// 按键事件
 		if(Key_Scan(KEY_SCAN_SINGLE) == KEY0_PRES) {
-			if(currentMenu->nextLevel != NULL) {
-				enter_pointerMenu();
-				if(pointerMenu->eventCB != NULL) {
+			if(currentMenu->nextLevel != NULL) {  // currentMenu 不处在最低级菜单
+				enter_pointerMenu();  // 进入选择的菜单
+				if(pointerMenu->eventCB != NULL) {  // 该菜单有功能函数
 					carryOut_event();
 				}else screen_Show_subMenus(currentMenu);
-			} else {
+			} else {  // currentMenu 处在最低级菜单
 				back_SafeMenu(&menu_Start);
+				EC11_CW_Event = EC11_CW_MenuSwitch_CB;
+				EC11_CCW_Event = EC11_CCW_MenuSwitch_CB;
 				screen_Show_subMenus(currentMenu);
 			}
 		}
 	}
+}
+
+/*=========================================================
+	EC11 功能回调
+=========================================================*/
+
+// EC11_CW
+
+/**
+ * @fn Main_CB_State EC11_CW_MenuSwitch_CB(void)
+ * @brief EC11顺时针旋转切换菜单功能
+ *
+ * @return [Main_CB_State] 函数运行结果是否正确
+ */
+Main_CB_State EC11_CW_MenuSwitch_CB(void)
+{
+	pointerMenu_JumpForward(&menu_Start);
+	screen_Show_PointerMenu();
+	return MAIN_CB_OK;
+}
+
+// EC11_CCW
+
+/**
+ * @fn Main_CCB_State EC11_CW_MenuSwitch_CB(void)
+ * @brief EC11逆时针旋转切换菜单功能
+ *
+ * @return [Main_CB_State] 函数运行结果是否正确
+ */
+Main_CB_State EC11_CCW_MenuSwitch_CB(void)
+{
+	pointerMenu_JumpBack(&menu_Start);
+	screen_Show_PointerMenu();
+	return MAIN_CB_OK;
 }
 
 
