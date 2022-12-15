@@ -58,4 +58,5 @@ pointerMenu_JumpForward | menu_t_ptr | menu_t* | 选中前一个菜单 | 使用�
 pointerMenu_JumpBack | menu_t_ptr | menu_t* | 选中后一个菜单 | 使用前应先初始化屏幕及屏幕参数
 enter_pointerMenu | void | menu_t* | 进入选中的菜单 | -
 back_SafeMenu | menu_t_ptr | menu_t* | 返回到安全的菜单，前提是 currentMenu 处在不安全的菜单 | 不安全的菜单指的是 [menu->nextLevel == NULL]
+back_PrevLevelMenu | menu_t_ptr | menu_t* | 返回到上一级菜单 | -
 carryOut_event | void | menu_t* | 执行选中的菜单的任务 | -

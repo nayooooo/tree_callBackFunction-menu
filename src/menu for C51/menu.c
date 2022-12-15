@@ -34,10 +34,10 @@ menu_t* screen_Show_subMenus(menu_t* parMenu)
 		// 显示一页菜单
 		do {
 			OLED_ShowString_len(MENU_INFOR_COL + POINTERMENU_SPACE * MENU_INFOR_WIDTH,
-							MENU_INFOR_ROW + i * MENU_INFOR_HIGHT,
-							p->name,
-							(get_Screen_ResRatio_totalCol() - POINTERMENU_SPACE * MENU_INFOR_WIDTH) / MENU_INFOR_WIDTH,
-							MENU_INFOR_SIZE, FILL);
+								MENU_INFOR_ROW + i * MENU_INFOR_HIGHT,
+								p->name,
+								(get_Screen_ResRatio_totalCol() - POINTERMENU_SPACE * MENU_INFOR_WIDTH) / MENU_INFOR_WIDTH,
+								MENU_INFOR_SIZE, FILL);
 			i++;
 			p = p->next;
 		} while ((p != NULL) && (i < OLED_ROW_MAX / MENU_INFOR_HIGHT));
@@ -142,7 +142,7 @@ menu_t* enter_pointerMenu(void)
 }
 
 /**
- * @fn menu_t* back_SafeMenu(void)
+ * @fn menu_t* back_SafeMenu(const menu_t_ptr menu_Start)
  * @brief 返回到安全的菜单，前提是 currentMenu 处在不安全的菜单
  * @details 不安全的菜单指的是 [menu->nextLevel == NULL]
  *
@@ -156,6 +156,28 @@ menu_t* back_SafeMenu(const menu_t_ptr menu_Start)
 	if(currentMenu->nextLevel == NULL)  // currentMenu 指向不安全的菜单
 	{
 		tempMenu_ptr = find_parMenu(menu_Start, pointerMenu);
+		if(tempMenu_ptr != NULL) {
+			currentMenu = tempMenu_ptr;
+			pointerMenu = currentMenu;  // 返回之后需要重新选择菜单
+		}
+	}
+	return currentMenu;
+}
+
+/**
+ * @fn menu_t* back_PrevLevelMenu(const menu_t_ptr menu_Start)
+ * @brief 返回到上一级菜单
+ *
+ * @param [menu_Start] menu system's pointer
+ * @return [menu_t*] 处理后 currentMenu 指向的菜单的指针
+ */
+menu_t* back_PrevLevelMenu(const menu_t_ptr menu_Start)
+{
+	menu_t* tempMenu_ptr = NULL;
+	
+	if(pointerMenu->level > 0)  // 返回上一级菜单有意义
+	{
+		tempMenu_ptr = find_parMenu(menu_Start, currentMenu);  // 正在显示的菜单是 currentMenu 的子级菜单
 		if(tempMenu_ptr != NULL) {
 			currentMenu = tempMenu_ptr;
 			pointerMenu = currentMenu;  // 返回之后需要重新选择菜单

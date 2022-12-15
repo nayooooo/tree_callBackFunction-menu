@@ -12,6 +12,16 @@
 
 	暂时没有实现普通菜单返回上一级的功能。
 
+2022-12-15
+
+	1. 增加了C51的例程 `EC11` 的按键长按功能，此功能只能在单次扫描模式下使用，可通过修改 `key.h` 文件中的宏 `KEY_LONG_PRES_SCAN_THRE` 来设置长按阈值，默认为500ms。
+	2. 增加了返回上一级菜单功能，相关API为 `menu` 文件中的 `back_PrevLevelMenu` 函数。
+
+	补充说明：
+
+	1. 暂时没有对各个API函数进行调用方面的优化处理，开发者需要了解各个API函数的功能及限制。
+	2. API.md文件中还没有标明各个API的限制，功能也仅仅是概括性地介绍了一下。
+
 # 树形结构菜单 #
 
 一种基于树形结构的C51单片机菜单管理系统。
@@ -93,40 +103,11 @@
 
 测试结果：
 
-![C_test](./C_test.png)
+![C_test](./Pictures/C_test.png)
 
 ### C51环境下的测试程序 ###
 
-	#include "main.h"
-
-	#ifdef NULL
-		 char address_is_null _at_ (0x0000);
-	#else
-		#define NULL		((void*)0)
-	#endif /* NULL */
-
-	menu_t menu_Start = {  // 开始菜单（开始画面）
-		"menu", 0, 0, 0, NULL, NULL, NULL, NULL
-	};
-	menu_t menu_OneLevel[] = {  // 一级菜单
-		{ "hello", 1, 0, 1, NULL, NULL, NULL, NULL },
-		{ "count", 1, 0, 2, NULL, NULL, NULL, NULL }
-	};
-	menu_t menu_TwoLevel[] = {  // 二级菜单
-		{ "Hello World!", 2, 1, 1, NULL, NULL, NULL, OLED_Show_Hello_World },
-		{ "Hello C51!", 2, 1, 2, NULL, NULL, NULL, OLED_Show_Hello_C51 }
-	};
-
-	void System_Init(void)
-	{
-		My_USART_Init();
-		key_Init();
-		OLED_Init();
-
-		MyTimer_Init();
-
-		EA_OPN();  // 开启总中断
-	}
+#### 单个菜单 ####
 
 	void main()
 	{
@@ -161,4 +142,69 @@
 
 测试结果：
 
-![C51_test](./C51_test.jpg)
+![C51_test](./Pictures/C51_test.jpg)
+
+#### 菜单之间切换 ####
+
+	void main()
+	{
+		Key_Value_Enum_t KeyVal = KEY_NULL;
+		Screen_ResRatio_t* Screen_Infor = NULL;
+
+		EC11_CW_Event = EC11_CW_MenuSwitch_CB;
+		EC11_CCW_Event = EC11_CCW_MenuSwitch_CB;
+
+		System_Init();
+
+		Screen_Infor = Screen_ResRatio_Init(
+							SCREEN_COL_MAX, SCREEN_ROW_MAX,
+							SCREEN_PIXEL_WIDTH_DEFAULT, SCREEN_PIXEL_HIGHT_DEFAULT,
+							SCREEN_PIXELS_TOTAL_COL_DEFAULT, SCREEN_PIXELS_TOTAL_ROW_DEFAULT
+						);
+
+		screen_Show_subMenus(currentMenu);
+
+		while(1)
+		{
+			// 刷新屏幕
+			if(OLED_Event_Flag & OLED_Update_Event) {
+				OLED_Event_Flag &= ~OLED_Update_Event;
+				OLED_Refresh_Gram();
+			}
+
+			// EC11 事件
+			if(EC11_Rotate_Times[0]) {
+				EC11_CW_Event();
+				EC11_Rotate_Times[0]--;
+			}
+			if(EC11_Rotate_Times[1]) {
+				EC11_CCW_Event();
+				EC11_Rotate_Times[1]--;
+			}
+
+			// 按键事件
+			KeyVal = Key_Scan(KEY_SCAN_SINGLE);
+			if(KeyVal == KEY0_PRES) {  // 进入菜单或从最底层菜单返回上一级
+				if(currentMenu->nextLevel != NULL) {  // currentMenu 不处在最低级菜单
+					enter_pointerMenu();  // 进入选择的菜单
+					if(pointerMenu->eventCB != NULL) {  // 该菜单有功能函数
+						carryOut_event();
+					}else screen_Show_subMenus(currentMenu);
+				} else {  // currentMenu 处在最低级菜单
+					back_SafeMenu(&menu_Start);
+					EC11_CW_Event = EC11_CW_MenuSwitch_CB;
+					EC11_CCW_Event = EC11_CCW_MenuSwitch_CB;
+					screen_Show_subMenus(currentMenu);
+				}
+			} else if(KeyVal == KEY0_LONG_PRES) {  // 返回上一级菜单
+				back_PrevLevelMenu(&menu_Start);
+				EC11_CW_Event = EC11_CW_MenuSwitch_CB;
+				EC11_CCW_Event = EC11_CCW_MenuSwitch_CB;
+				screen_Show_subMenus(currentMenu);
+			}
+		}
+	}
+
+测试结果：
+
+<video src="./Videos/menuSystem-Example-STC8H8K64U-EC11-Test.mp4" controls="controls" width="768" height="432">menuSystem-Example-STC8H8K64U-EC11-Test</video>
