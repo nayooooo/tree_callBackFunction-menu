@@ -18,12 +18,6 @@
 
 #include	"timer.h"
 
-/********************* Timer1中断函数************************/
-void timer1_int (void) interrupt TIMER1_VECTOR
-{
-   P66 = ~P66;
-}
-
 /********************* Timer3中断函数************************/
 void timer3_int (void) interrupt TIMER3_VECTOR
 {

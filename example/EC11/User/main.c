@@ -83,6 +83,7 @@ void System_Init(void)
 
 void main()
 {
+	Key_Value_Enum_t KeyVal = KEY_NULL;
 	Screen_ResRatio_t* Screen_Infor = NULL;
 	
 	EC11_CW_Event = EC11_CW_MenuSwitch_CB;
@@ -117,7 +118,8 @@ void main()
 		}
 		
 		// 按键事件
-		if(Key_Scan(KEY_SCAN_SINGLE) == KEY0_PRES) {
+		KeyVal = Key_Scan(KEY_SCAN_SINGLE);
+		if(KeyVal == KEY0_PRES) {  // 进入菜单或从最底层菜单返回上一级
 			if(currentMenu->nextLevel != NULL) {  // currentMenu 不处在最低级菜单
 				enter_pointerMenu();  // 进入选择的菜单
 				if(pointerMenu->eventCB != NULL) {  // 该菜单有功能函数
@@ -129,6 +131,11 @@ void main()
 				EC11_CCW_Event = EC11_CCW_MenuSwitch_CB;
 				screen_Show_subMenus(currentMenu);
 			}
+		} else if(KeyVal == KEY0_LONG_PRES) {  // 返回上一级菜单
+			back_PrevLevelMenu(&menu_Start);
+			EC11_CW_Event = EC11_CW_MenuSwitch_CB;
+			EC11_CCW_Event = EC11_CCW_MenuSwitch_CB;
+			screen_Show_subMenus(currentMenu);
 		}
 	}
 }

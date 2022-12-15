@@ -11,6 +11,10 @@
 #define KEY0_Pin			GPIO_Pin_3
 #define KEY0				P13
 
+/* 按键长按相关宏 ------------------------------*/
+
+#define KEY_LONG_PRES_SCAN_THRE			(500)			/* 按键按下时间超过500ms将开始判断为长按 */
+
 /* 按键状态枚举 --------------------------------*/
 
 typedef enum{
@@ -20,7 +24,8 @@ typedef enum{
 
 typedef enum{
 	KEY_NULL = 0,
-	KEY0_PRES
+	KEY0_PRES,
+	KEY0_LONG_PRES
 }Key_Value_Enum_t;
 
 /* 按键扫描方式枚举 ----------------------------*/

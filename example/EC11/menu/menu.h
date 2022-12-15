@@ -33,6 +33,7 @@ menu_t* pointerMenu_JumpForward(const menu_t_ptr menu_Start);
 menu_t* pointerMenu_JumpBack(const menu_t_ptr menu_Start);
 menu_t* enter_pointerMenu(void);
 menu_t* back_SafeMenu(const menu_t_ptr menu_Start);
+menu_t* back_PrevLevelMenu(const menu_t_ptr menu_Start);
 menu_t* carryOut_event(void);
 
 #endif /* __MENU_H */
