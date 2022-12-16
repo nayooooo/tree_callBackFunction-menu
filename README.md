@@ -22,6 +22,12 @@
 	1. 暂时没有对各个API函数进行调用方面的优化处理，开发者需要了解各个API函数的功能及限制。
 	2. API.md文件中还没有标明各个API的限制，功能也仅仅是概括性地介绍了一下。
 
+2022-12-16
+
+	1. 向C语言环境中的menu模块中更新了 `menu` 和 `menu_link` 。
+	2. 重命名了menu_link中的 `count_CurrentMenu_NextLevelMenu_Num` API为 `count_NextLevelMenu_Num` 。
+	3. 验证了C语言环境中的menu模块中新增的API。
+
 # 树形结构菜单 #
 
 一种基于树形结构的C51单片机菜单管理系统。
