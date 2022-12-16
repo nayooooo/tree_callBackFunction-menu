@@ -3,7 +3,7 @@
 
 #include "menu.h"
 
-menuEventState print_Hello(menu_t* menu);
-menuEventState print_Hello_C(menu_t* menu);
+menuEventState print_Hello(void);
+menuEventState print_Hello_C(void);
 
 #endif /* __MENU_EVENT_H */

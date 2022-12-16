@@ -208,6 +208,52 @@ menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu)
 }
 
 /**
+ * @fn uint8_t count_NextLevelMenu_Num(const menu_t_ptr menu_Start)
+ * @brief count the [menu_Start]'s nextLevel menus'num
+ *
+ * @param [menu_Start] subtree's pointer
+ * @return [uint8_t] the [menu_Start]'s nextLevel menus'num
+ */
+uint8_t count_NextLevelMenu_Num(const menu_t_ptr menu_Start)
+{
+	uint8_t menu_Num = 0;
+	menu_t* p = menu_Start;
+
+	if (p->nextLevel != NULL)
+	{
+		menu_Num++;
+		p = p->nextLevel;
+		while (p->next != NULL) {
+			menu_Num++;
+			p = p->next;
+		}
+	}
+
+	return menu_Num;
+}
+
+/**
+ * @fn uint8_t count_SameLevel_PrevMenu_Num(const menu_t* const menu)
+ * @brief count the [menu]'s sameLevel prevMenus'num, which are same parMenu
+ *
+ * @param [menu] target menu
+ * @return [uint8_t] the [menu]'s sameLevel prevMenus'num
+ */
+uint8_t count_SameLevel_PrevMenu_Num(const menu_t* const menu)
+{
+	uint8_t prevMenu_Num = 0;
+	menu_t* p = menu;
+
+	while ((p->prev != NULL) && (p->prev->level == p->level))
+	{
+		prevMenu_Num++;
+		p = p->prev;
+	}
+
+	return prevMenu_Num;
+}
+
+/**
  * @fn menu_t_ptr insert_Menu(const menu_t_ptr menu_Start, const menu_t* const menu_Insert)
  * @brief insert a menu into menu system
  *

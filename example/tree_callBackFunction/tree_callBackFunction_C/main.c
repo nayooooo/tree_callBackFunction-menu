@@ -24,21 +24,25 @@ menu_t menu_TwoLevel[] = {  // ¶þ¼¶²Ëµ¥
 
 int main()
 {
+    uint8_t num = 0;
     menu_t* tempMenu = NULL;
-    menu_t* targetMenu = &menu_Start;
+    menu_t* menu = &menu_TwoLevel[0];
 
     insert_Menu(&menu_Start, &menu_OneLevel[0]);
     insert_Menu(&menu_Start, &menu_OneLevel[1]);
     insert_Menu(&menu_Start, &menu_TwoLevel[0]);
     insert_Menu(&menu_Start, &menu_TwoLevel[1]);
+    currentMenu = &menu_Start;
+    pointerMenu = &menu_Start;
+
     printf("==========================================\r\n");
-    traversal_MenuSystem(&menu_Start);
+    show_subMenus(currentMenu);
     printf("==========================================\r\n");
-    tempMenu = find_nextMenu(&menu_Start, targetMenu);
-    if (tempMenu != NULL)
-        printf("%d %d %d: %s\r\n", tempMenu->level, tempMenu->parVal, tempMenu->selfVal, tempMenu->name);
-    else
-        printf("not find it!\r\n");
+    pointerMenu_JumpBack(&menu_Start);
+    enter_pointerMenu();
+    pointerMenu_JumpBack(&menu_Start);
+    pointerMenu_JumpBack(&menu_Start);
+    carryOut_event();
 
     return 0;
 }

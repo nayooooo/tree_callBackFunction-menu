@@ -1,13 +1,15 @@
 #include "menu_event.h"
 
-menuEventState print_Hello(menu_t* menu)
+#include <stdio.h>
+
+menuEventState print_Hello(void)
 {
 	printf("Hello World!\r\n");
 
 	return MENU_EVENT_OK;
 }
 
-menuEventState print_Hello_C(menu_t* menu)
+menuEventState print_Hello_C(void)
 {
 	printf("Hello C!\r\n");
 
