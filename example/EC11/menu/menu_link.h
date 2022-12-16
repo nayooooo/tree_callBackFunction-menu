@@ -19,7 +19,7 @@ menu_t* find_Menu(const menu_t_ptr menu_Start, const menu_t* const menu_Target) 
 menu_t* find_parMenu(const menu_t_ptr menu_Start, const menu_t* const subMenu) reentrant;
 menu_t* find_prevMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant;
 menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu) reentrant;
-uint8_t count_CurrentMenu_NextLevelMenu_Num(const menu_t_ptr menu_Start);
+uint8_t count_NextLevelMenu_Num(const menu_t_ptr menu_Start);
 uint8_t count_SameLevel_PrevMenu_Num(const menu_t* const menu);
 menu_t_ptr insert_Menu(const menu_t_ptr menu_Start, menu_t* const menu_Insert);
 menu_t_ptr delete_Menu(const menu_t_ptr menu_Start, menu_t* const menu_Delete);

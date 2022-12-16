@@ -222,13 +222,13 @@ menu_t* find_nextMenu(const menu_t_ptr menu_Start, const menu_t* const menu) ree
 }
 
 /**
- * @fn uint8_t count_CurrentMenu_NextLevelMenu_Num(const menu_t_ptr menu_Start)
+ * @fn uint8_t count_NextLevelMenu_Num(const menu_t_ptr menu_Start)
  * @brief count the [menu_Start]'s nextLevel menus'num
  *
  * @param [menu_Start] subtree's pointer
  * @return [uint8_t] the [menu_Start]'s nextLevel menus'num
  */
-uint8_t count_CurrentMenu_NextLevelMenu_Num(const menu_t_ptr menu_Start)
+uint8_t count_NextLevelMenu_Num(const menu_t_ptr menu_Start)
 {
 	uint8_t menu_Num = 0;
 	menu_t* p = menu_Start;
@@ -248,7 +248,7 @@ uint8_t count_CurrentMenu_NextLevelMenu_Num(const menu_t_ptr menu_Start)
 
 /**
  * @fn uint8_t count_SameLevel_PrevMenu_Num(const menu_t* const menu)
- * @brief count the [menu]'s sameLevel prevMenus'num
+ * @brief count the [menu]'s sameLevel prevMenus'num, which are same parMenu
  *
  * @param [menu] target menu
  * @return [uint8_t] the [menu]'s sameLevel prevMenus'num

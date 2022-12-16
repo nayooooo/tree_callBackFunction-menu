@@ -175,12 +175,14 @@ menu_t* back_PrevLevelMenu(const menu_t_ptr menu_Start)
 {
 	menu_t* tempMenu_ptr = NULL;
 	
-	if(pointerMenu->level > 0)  // 返回上一级菜单有意义
+	if(pointerMenu->level > 0)  // 返回上一级菜单有意义，也即 pointerMenu 不指向 menu_Start
 	{
 		tempMenu_ptr = find_parMenu(menu_Start, currentMenu);  // 正在显示的菜单是 currentMenu 的子级菜单
 		if(tempMenu_ptr != NULL) {
 			currentMenu = tempMenu_ptr;
 			pointerMenu = currentMenu;  // 返回之后需要重新选择菜单
+		} else if(pointerMenu->level == 1) {  // currentMenu 指向 menu_Start 且 pointerMenu 正在选择
+			pointerMenu = currentMenu;
 		}
 	}
 	return currentMenu;
