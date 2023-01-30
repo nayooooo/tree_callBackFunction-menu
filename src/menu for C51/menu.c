@@ -27,7 +27,7 @@ menu_t* screen_Show_subMenus(menu_t* parMenu)
 	uint8_t i = 0;
 	uint8_t menu_Num = 0;
 	menu_t* p = parMenu;
-	
+
 	OLED_Clear();
 	if (p->nextLevel != NULL) {  // 当前菜单有子级菜单
 		p = p->nextLevel;
@@ -62,7 +62,7 @@ menu_t* screen_Show_PointerMenu(void)
 	uint8_t num = get_Screen_ResRatio_totalRow() / MENU_INFOR_HIGHT;  // 一面屏幕最大容纳菜单数
 	menu_t* c = currentMenu;
 	menu_t* p = pointerMenu;
-	
+
 	if(p->level == c->level + 1)
 	{
 		// 检查选中的菜单在当前菜单栏中的序号，0号为第一个菜单
@@ -71,7 +71,7 @@ menu_t* screen_Show_PointerMenu(void)
 		OLED_ShowString(MENU_INFOR_COL, MENU_INFOR_ROW + (i % num) * MENU_INFOR_HIGHT,
 						(u8*)">", MENU_INFOR_SIZE, FILL);
 	}
-	
+
 	return pointerMenu;
 }
 
@@ -85,7 +85,7 @@ menu_t* screen_Show_PointerMenu(void)
 menu_t* pointerMenu_JumpForward(const menu_t_ptr menu_Start)
 {
 	menu_t* tempMenu_ptr = NULL;
-	
+
 	// pointerMenu 和 currentMenu 均无异常时
 	if((pointerMenu != NULL) && (currentMenu != NULL)
 		&& (pointerMenu->level == currentMenu->level + 1))
@@ -98,7 +98,7 @@ menu_t* pointerMenu_JumpForward(const menu_t_ptr menu_Start)
 		if(currentMenu->nextLevel != NULL)
 			pointerMenu = currentMenu->nextLevel;
 	}
-	
+
 	return pointerMenu;
 }
 
@@ -112,7 +112,7 @@ menu_t* pointerMenu_JumpForward(const menu_t_ptr menu_Start)
 menu_t* pointerMenu_JumpBack(const menu_t_ptr menu_Start)
 {
 	menu_t* tempMenu_ptr = NULL;
-	
+
 	// pointerMenu 和 currentMenu 均无异常时
 	if((pointerMenu != NULL) && (currentMenu != NULL)
 		&& (pointerMenu->level == currentMenu->level + 1))
@@ -125,7 +125,7 @@ menu_t* pointerMenu_JumpBack(const menu_t_ptr menu_Start)
 		if(currentMenu->nextLevel != NULL)
 			pointerMenu = currentMenu->nextLevel;
 	}
-	
+
 	return pointerMenu;
 }
 
@@ -152,10 +152,10 @@ menu_t* enter_pointerMenu(void)
 menu_t* back_SafeMenu(const menu_t_ptr menu_Start)
 {
 	menu_t* tempMenu_ptr = NULL;
-	
+
 	if(currentMenu->nextLevel == NULL)  // currentMenu 指向不安全的菜单
 	{
-		tempMenu_ptr = find_parMenu(menu_Start, pointerMenu);
+		tempMenu_ptr = find_parMenu(menu_Start, currentMenu);
 		if(tempMenu_ptr != NULL) {
 			currentMenu = tempMenu_ptr;
 			pointerMenu = currentMenu;  // 返回之后需要重新选择菜单
@@ -174,7 +174,7 @@ menu_t* back_SafeMenu(const menu_t_ptr menu_Start)
 menu_t* back_PrevLevelMenu(const menu_t_ptr menu_Start)
 {
 	menu_t* tempMenu_ptr = NULL;
-	
+
 	if(pointerMenu->level > 0)  // 返回上一级菜单有意义
 	{
 		tempMenu_ptr = find_parMenu(menu_Start, currentMenu);  // 正在显示的菜单是 currentMenu 的子级菜单
