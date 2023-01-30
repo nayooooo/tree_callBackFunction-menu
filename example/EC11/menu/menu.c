@@ -155,7 +155,7 @@ menu_t* back_SafeMenu(const menu_t_ptr menu_Start)
 	
 	if(currentMenu->nextLevel == NULL)  // currentMenu 指向不安全的菜单
 	{
-		tempMenu_ptr = find_parMenu(menu_Start, pointerMenu);
+		tempMenu_ptr = find_parMenu(menu_Start, currentMenu);
 		if(tempMenu_ptr != NULL) {
 			currentMenu = tempMenu_ptr;
 			pointerMenu = currentMenu;  // 返回之后需要重新选择菜单
